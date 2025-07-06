@@ -1,0 +1,390 @@
+<div class="qid-scanner-page">
+    <!-- Header Section -->
+    <div class="qid-scanner-header">
+        <div class="page-title">
+            <h1><i class="fa fa-camera"></i> QID Scanner</h1>
+            <p class="text-muted">Qatar ID Document Scanner with OCR</p>
+        </div>
+        <div class="qid-scanner-actions">
+            <button class="btn btn-primary btn-sm" id="qid-info-btn">
+                <i class="fa fa-info-circle"></i> API Info
+            </button>
+            <button class="btn btn-secondary btn-sm" id="qid-validate-btn">
+                <i class="fa fa-check-circle"></i> Validate QID
+            </button>
+        </div>
+    </div>
+
+    <!-- Device Detection and Mode Selection -->
+    <div class="qid-scanner-modes" id="qid-modes">
+        <div class="row">
+            <!-- Desktop Mode -->
+            <div class="col-md-6">
+                <div class="qid-mode-card" id="desktop-mode-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fa fa-desktop"></i> Desktop Mode</h5>
+                            <p class="text-muted">Use your phone's camera to scan QID documents</p>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="qr-code-container" id="qr-code-container">
+                                <div class="qr-code-placeholder">
+                                    <i class="fa fa-qrcode fa-4x text-muted"></i>
+                                    <p>Generating QR Code...</p>
+                                </div>
+                            </div>
+                            <div class="qr-instructions">
+                                <h6>Scan with your phone</h6>
+                                <ol class="text-left">
+                                    <li>Open your phone's camera app</li>
+                                    <li>Point it at the QR code above</li>
+                                    <li>Tap the notification to open the scanner</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Alternative -->
+            <div class="col-md-6">
+                <div class="qid-mode-card" id="mobile-mode-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fa fa-mobile"></i> Mobile Alternative</h5>
+                            <p class="text-muted">Access directly from your mobile device</p>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="mobile-url-container">
+                                <p class="text-muted">Or visit this URL on your mobile device:</p>
+                                <div class="mobile-url" id="mobile-url">
+                                    <code id="mobile-url-text">Loading...</code>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-block" id="use-desktop-camera-btn">
+                                <i class="fa fa-camera"></i> Use Desktop Camera Instead
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Camera Interface -->
+    <div class="qid-camera-interface" id="camera-interface" style="display: none;">
+        <div class="camera-container">
+            <div class="camera-header">
+                <h4><i class="fa fa-camera"></i> QID Scanner</h4>
+                <p class="text-muted">Position your Qatar ID in the camera frame</p>
+            </div>
+            
+            <div class="camera-viewport">
+                <video id="camera-video" autoplay playsinline></video>
+                <canvas id="camera-canvas" style="display: none;"></canvas>
+                
+                <!-- Camera overlay guides -->
+                <div class="camera-overlay">
+                    <div class="camera-guides">
+                        <div class="guide-corner guide-tl"></div>
+                        <div class="guide-corner guide-tr"></div>
+                        <div class="guide-corner guide-bl"></div>
+                        <div class="guide-corner guide-br"></div>
+                    </div>
+                    <div class="camera-instructions">
+                        <p>Position QID within the frame</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="camera-controls">
+                <button class="btn btn-success btn-lg btn-block" id="capture-btn">
+                    <i class="fa fa-camera"></i> Capture QID
+                </button>
+                <button class="btn btn-secondary btn-sm" id="switch-camera-btn" style="display: none;">
+                    <i class="fa fa-refresh"></i> Switch Camera
+                </button>
+            </div>
+            
+            <!-- Processing indicator -->
+            <div class="processing-indicator" id="processing-indicator" style="display: none;">
+                <div class="text-center">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>
+                    <p>Processing QID image...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="qid-results-section" id="results-section" style="display: none;">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fa fa-check-circle text-success"></i> QID Information Extracted</h5>
+                <button class="btn btn-sm btn-secondary float-right" id="scan-another-btn">
+                    <i class="fa fa-refresh"></i> Scan Another QID
+                </button>
+            </div>
+            <div class="card-body" id="results-content">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Display -->
+    <div class="qid-error-section" id="error-section" style="display: none;">
+        <div class="alert alert-danger">
+            <h6><i class="fa fa-exclamation-triangle"></i> Error</h6>
+            <p id="error-message"></p>
+            <button class="btn btn-sm btn-outline-danger" id="retry-btn">
+                <i class="fa fa-refresh"></i> Try Again
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- QID Validation Modal -->
+<div class="modal fade" id="qid-validate-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validate QID Number</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="qid-number-input">QID Number (11 digits)</label>
+                    <input type="text" class="form-control" id="qid-number-input" 
+                           placeholder="Enter QID number (e.g., 28425001234)" maxlength="11">
+                    <small class="form-text text-muted">Enter the 11-digit Qatar ID number</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="validate-qid-btn">
+                    <i class="fa fa-check"></i> Validate
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Styles -->
+<style>
+.qid-scanner-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.qid-scanner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.page-title h1 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.page-title p {
+    margin: 5px 0 0 0;
+}
+
+.qid-scanner-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.qid-mode-card .card {
+    height: 100%;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.qid-mode-card .card:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 8px rgba(0,123,255,0.1);
+}
+
+.qr-code-container {
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.qr-code-placeholder {
+    text-align: center;
+    color: #6c757d;
+}
+
+.qr-instructions ol {
+    text-align: left;
+    display: inline-block;
+}
+
+.mobile-url-container {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.mobile-url code {
+    font-size: 12px;
+    word-break: break-all;
+    background: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.camera-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.camera-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.camera-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+}
+
+#camera-video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.camera-guides {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px dashed rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+}
+
+.guide-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+}
+
+.guide-tl { top: -3px; left: -3px; border-right: none; border-bottom: none; }
+.guide-tr { top: -3px; right: -3px; border-left: none; border-bottom: none; }
+.guide-bl { bottom: -3px; left: -3px; border-right: none; border-top: none; }
+.guide-br { bottom: -3px; right: -3px; border-left: none; border-top: none; }
+
+.camera-instructions {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.camera-controls {
+    text-align: center;
+}
+
+.processing-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.qid-results-section .card {
+    border: 2px solid #28a745;
+}
+
+.qid-error-section {
+    margin-top: 20px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .qid-scanner-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .qid-scanner-actions {
+        justify-content: center;
+    }
+    
+    .camera-viewport {
+        margin: 0 -15px 20px;
+        border-radius: 0;
+    }
+    
+    .qid-mode-card {
+        margin-bottom: 20px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .qid-scanner-page {
+        background: #1a1a1a;
+        color: #fff;
+    }
+    
+    .qid-mode-card .card {
+        background: #2d2d2d;
+        border-color: #404040;
+    }
+    
+    .mobile-url-container {
+        background: #333;
+    }
+    
+    .mobile-url code {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #fff;
+    }
+}
+</style>
+

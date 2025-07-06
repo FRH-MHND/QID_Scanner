@@ -1,0 +1,519 @@
+/* QID Scanner Styles for ERPNext */
+
+/* Page Layout */
+.qid-scanner-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.qid-scanner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-title h1 {
+    margin: 0;
+    color: var(--heading-color);
+    font-size: 2rem;
+}
+
+.page-title p {
+    margin: 5px 0 0 0;
+    color: var(--text-muted);
+}
+
+.qid-scanner-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Mode Cards */
+.qid-mode-card .card {
+    height: 100%;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+}
+
+.qid-mode-card .card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(var(--primary-color-rgb), 0.1);
+    transform: translateY(-2px);
+}
+
+.qid-mode-card .card-header {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.qid-mode-card .card-header h5 {
+    margin: 0;
+    color: var(--heading-color);
+}
+
+/* QR Code Container */
+.qr-code-container {
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: var(--control-bg);
+    transition: all 0.3s ease;
+}
+
+.qr-code-container:hover {
+    border-color: var(--primary-color);
+    background: var(--control-bg-hover);
+}
+
+.qr-code-placeholder {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.qr-code-placeholder i {
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+.qr-instructions {
+    text-align: center;
+}
+
+.qr-instructions ol {
+    text-align: left;
+    display: inline-block;
+    margin: 0;
+}
+
+/* Mobile URL Container */
+.mobile-url-container {
+    padding: 20px;
+    background: var(--control-bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.mobile-url code {
+    font-size: 12px;
+    word-break: break-all;
+    background: var(--card-bg);
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    display: block;
+    margin-top: 8px;
+    color: var(--text-color);
+}
+
+/* Camera Interface */
+.camera-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.camera-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.camera-header h4 {
+    color: var(--heading-color);
+    margin: 0 0 5px 0;
+}
+
+.camera-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#camera-video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.camera-guides {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px dashed rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    animation: pulse-guides 2s infinite;
+}
+
+@keyframes pulse-guides {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+}
+
+.guide-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.guide-tl { 
+    top: -3px; 
+    left: -3px; 
+    border-right: none; 
+    border-bottom: none; 
+    border-radius: 4px 0 0 0;
+}
+
+.guide-tr { 
+    top: -3px; 
+    right: -3px; 
+    border-left: none; 
+    border-bottom: none; 
+    border-radius: 0 4px 0 0;
+}
+
+.guide-bl { 
+    bottom: -3px; 
+    left: -3px; 
+    border-right: none; 
+    border-top: none; 
+    border-radius: 0 0 0 4px;
+}
+
+.guide-br { 
+    bottom: -3px; 
+    right: -3px; 
+    border-left: none; 
+    border-top: none; 
+    border-radius: 0 0 4px 0;
+}
+
+.camera-instructions {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+.camera-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.camera-controls .btn {
+    margin: 5px;
+}
+
+/* Processing Indicator */
+.processing-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(var(--card-bg-rgb), 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+}
+
+.processing-indicator i {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.processing-indicator p {
+    margin: 0;
+    color: var(--text-color);
+}
+
+/* Results Section */
+.qid-results-section .card {
+    border: 2px solid var(--success-color);
+    background: var(--card-bg);
+}
+
+.qid-results-section .card-header {
+    background: rgba(var(--success-color-rgb), 0.1);
+    border-bottom: 1px solid var(--success-color);
+}
+
+.qid-results-section .card-header h5 {
+    color: var(--success-color);
+    margin: 0;
+}
+
+/* Confidence Scores */
+.confidence-scores {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.confidence-item {
+    display: flex;
+    align-items: center;
+}
+
+.confidence-item .badge {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+/* Error Section */
+.qid-error-section {
+    margin-top: 20px;
+}
+
+.qid-error-section .alert {
+    border-radius: 8px;
+}
+
+.qid-error-section .alert h6 {
+    margin: 0 0 10px 0;
+}
+
+/* API Info Dialog */
+.api-info h5 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.api-info ul {
+    margin-bottom: 15px;
+}
+
+.api-info li {
+    margin-bottom: 5px;
+}
+
+/* QID Validation Result */
+.qid-validation-result .table td {
+    padding: 8px 12px;
+    border: none;
+}
+
+.qid-validation-result .table td:first-child {
+    width: 40%;
+    font-weight: 500;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .qid-scanner-page {
+        padding: 15px;
+    }
+    
+    .qid-scanner-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .qid-scanner-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .camera-viewport {
+        margin: 0 -15px 20px;
+        border-radius: 0;
+    }
+    
+    .qid-mode-card {
+        margin-bottom: 20px;
+    }
+    
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+    
+    .qr-code-container {
+        min-height: 200px;
+    }
+    
+    .mobile-url-container {
+        padding: 15px;
+    }
+    
+    .processing-indicator {
+        margin: 0 15px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .qid-scanner-page {
+        padding: 10px;
+    }
+    
+    .camera-guides {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+    
+    .camera-instructions {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .qr-code-container {
+        min-height: 150px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .qid-scanner-page {
+        background: var(--bg-color);
+        color: var(--text-color);
+    }
+    
+    .qid-mode-card .card {
+        background: var(--card-bg);
+        border-color: var(--border-color);
+    }
+    
+    .mobile-url-container {
+        background: var(--control-bg);
+    }
+    
+    .mobile-url code {
+        background: var(--card-bg);
+        border-color: var(--border-color);
+        color: var(--text-color);
+    }
+    
+    .processing-indicator {
+        background: rgba(var(--card-bg-rgb), 0.95);
+        border-color: var(--border-color);
+    }
+}
+
+/* ERPNext Integration Styles */
+.page-container .qid-scanner-page {
+    padding-top: 0;
+}
+
+.page-head .qid-scanner-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+}
+
+/* Custom Button Styles */
+.btn-qid-scanner {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-qid-scanner:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
+    color: white;
+}
+
+.btn-qid-scanner i {
+    margin-right: 8px;
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading States */
+.loading-shimmer {
+    background: linear-gradient(90deg, 
+        var(--control-bg) 25%, 
+        var(--control-bg-hover) 50%, 
+        var(--control-bg) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Accessibility Improvements */
+.camera-controls .btn:focus,
+.qid-scanner-actions .btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.camera-viewport:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .camera-guides {
+        border-color: #fff;
+        border-width: 3px;
+    }
+    
+    .guide-corner {
+        border-width: 4px;
+    }
+    
+    .camera-instructions {
+        background: #000;
+        border: 2px solid #fff;
+    }
+}
+

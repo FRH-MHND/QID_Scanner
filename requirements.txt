@@ -1,0 +1,18 @@
+# QID Scanner ERPNext App Requirements
+
+# Core OCR and Image Processing
+pytesseract>=0.3.10
+opencv-python>=4.8.0
+Pillow>=9.0.0
+numpy>=1.21.0
+
+# Optional: EasyOCR for enhanced accuracy (large download)
+# easyocr>=1.7.0
+
+# Text Processing and Validation
+regex>=2023.0.0
+
+# ERPNext Dependencies (automatically installed with ERPNext)
+# frappe
+# erpnext
+

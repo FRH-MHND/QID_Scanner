@@ -1,0 +1,32 @@
+{
+ "creation": "2025-01-07 04:32:40.843956",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-01-07 04:32:40.843956",
+ "modified_by": "Administrator",
+ "module": "QID Scanner",
+ "name": "qid-scanner",
+ "owner": "Administrator",
+ "page_name": "QID Scanner",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Employee"
+  },
+  {
+   "role": "HR Manager"
+  },
+  {
+   "role": "HR User"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "QID Scanner"
+}
+

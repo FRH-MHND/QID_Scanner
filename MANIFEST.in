@@ -1,0 +1,19 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include qid_scanner *.css
+recursive-include qid_scanner *.csv
+recursive-include qid_scanner *.html
+recursive-include qid_scanner *.ico
+recursive-include qid_scanner *.js
+recursive-include qid_scanner *.json
+recursive-include qid_scanner *.md
+recursive-include qid_scanner *.png
+recursive-include qid_scanner *.py
+recursive-include qid_scanner *.svg
+recursive-include qid_scanner *.txt
+recursive-exclude qid_scanner *.pyc
+
